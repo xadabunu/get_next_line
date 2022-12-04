@@ -44,19 +44,23 @@ static char	*ft_read_to_n(char *str)
 
 char	*get_next_line(int fd)
 {
-	static char	buffer[BUFFER_SIZE];
-	long		ret;
-	char		*next_line;
+	char		buffer[BUFFER_SIZE];
+	long		read;
+	static char	next_line[BUFFER_SIZE + 1] = "\0";
 
 	if (fd < 0 || BUFFER_SIZE < 1)
 		return (NULL);
-	ret = read(fd, buffer, BUFFER_SIZE);
-	// if (ret > 0)
-	// {
-	// }
-	next_line = ft_read_to_n(buffer);
-	if (!next_line)
-		return (NULL);
-	return (next_line);
+	if (*next_line == 0)
+	{
+		// soit premier appel soit appel après lecture complète => read retournera 0
+		// init tout à 0 par sécurité ?
+		read = read(fd, buffer, BUFFER_SIZE);
+		if (read < 1)
+			return (NULL);
+	}
+	// read_to_n doit copier en incrémentant le pointeur up to \n et s'il tombe 
+	// sur un /0, lire dans le fichier pour vérifier qu'il s'agit bien de
+	// la fin du fichier avant de return la string
+	return (ft_read_to_n(next_line););
 }
 
