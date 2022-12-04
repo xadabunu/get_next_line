@@ -61,6 +61,8 @@ char	*get_next_line(int fd)
 	// read_to_n doit copier en incrémentant le pointeur up to \n et s'il tombe 
 	// sur un /0, lire dans le fichier pour vérifier qu'il s'agit bien de
 	// la fin du fichier avant de return la string
+	// cette fonction retournera également l'adresse à sa valeur initiale 
+	// avant une lecture (var -= BUFFER_SIZE)
 	return (ft_read_to_n(next_line););
 }
 
