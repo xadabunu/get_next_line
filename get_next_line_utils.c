@@ -10,4 +10,60 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "get_next_line.h"
 
+char	*ft_calloc(size_t size, size_t count)
+{
+	char	*res;
+	size_t	i;
+	size_t	total;
+
+	total = size * count;
+	res = malloc(total);
+	if (!res)
+		return (NULL);
+	i = 0;
+	while (i < total)
+		res[i] = '\0';
+	return (res);
+}
+
+void	ft_strcpy(char *dest, char *src, int len)
+{
+	int	i;
+
+	i = 0;
+	while (i < len)
+	{
+		dest[i] = src[i];
+		++i;
+	}
+	dest[i] = '\0';
+}
+
+char	*gnl_join(char *s1, char *s2)
+{
+	size_t	i;
+	size_t	len1;
+	size_t	len2;
+	char	*str;
+
+	i = 0;
+	len1 = gnl_len(s1);
+	len2 = gnl_len(s2);
+	str = ft_calloc(sizeof(*str), (len1 + len2 + 1));
+	while (i < len1)
+	{
+		str[i] = s1[i];
+		++i;
+	}
+	i = 0;
+	while (i < len2)
+	{
+		str[len1 + i] = *s2;
+		++i;
+		++s2;
+	}
+	free(s1);
+	return (str);
+}

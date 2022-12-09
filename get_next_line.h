@@ -15,7 +15,12 @@
 
 # include <unistd.h>
 # include <stdlib.h>
+# include <limits.h>
 
 char	*get_next_line(int fd);
+char	*ft_calloc(size_t nbyte, size_t size);
+void	ft_strcpy(char *dest, char *src, int len);
+size_t	gnl_len(const char *str);
+char	*gnl_join(char *s1, char *s2);
 
 #endif

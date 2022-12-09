@@ -12,66 +12,52 @@
 
 #include "get_next_line.h"
 
-static size_t	gnl_len(char *str)
+size_t	gnl_len(const char *str)
 {
 	size_t	i;
 
 	i = 0;
 	while (str[i] && str[i] != '\n')
 		++i;
+	if (str[i] == '\n')
+		++i;
 	return (i);
 }
 
-static void	gnl_copy(char *dest, char *src, size_t len, long fd)
+static char	*gnl_copy(char *src, long fd, char *buffer)
 {
-}
-
-static char	*ft_read_to_n(char **str, long fd)
-{
-	size_t	i;
 	char	*dest;
 	size_t	len;
+	long	ret;
 
-	i = 0;
-	len = gnl_len(*str);
-	dest = malloc(sizeof(*dest) * (len + 1));
-	if (!dest)
-		return (NULL);
-	while (i < len)
+	len = gnl_len(src);
+	dest = ft_calloc(sizeof(*dest), len + 1);
+	ft_strcpy(dest, src, len);
+	while (dest[gnl_len(dest) - 1] != '\n' && ret > 0)
 	{
-		dest[i] = **str;
-		++i;
-		++*str;
+		ret = read(fd, buffer, BUFFER_SIZE);
+		ft_strcpy(src, buffer, BUFFER_SIZE);
+		dest = gnl_join(dest, src);
 	}
-	dest[i] = (**str)++;
 	return (dest);
 }
 
 char	*get_next_line(int fd)
 {
-	static char		next_line[BUFFER_SIZE + 1] = "\0";
-	char			buffer[BUFFER_SIZE];
-	long			read;
-	unsigned int	i;
+	static char	nl[BUFFER_SIZE + 1] = "\0";
+	char		buffer[BUFFER_SIZE];
+	char		*next_line;
+	long		ret;
 
-	if (fd < 0 || BUFFER_SIZE < 1)
+	if (fd < 0 || fd > OPEN_MAX || BUFFER_SIZE < 1)
 		return (NULL);
-	if (*next_line == 0)
+	if (nl[0] == '\0')
 	{
-		i = 0;
-		while (i < BUFFER_SIZE)
-			next_line[i++] = '\0';
-		// soit premier appel soit appel après lecture complète => read retournera 0
-		// init tout à 0 par sécurité ?
-		read = read(fd, buffer, BUFFER_SIZE);
-		if (read < 1)
+		ret = read(fd, buffer, BUFFER_SIZE);
+		if (ret < 1)
 			return (NULL);
+		ft_strcpy(nl, buffer, BUFFER_SIZE);
 	}
-	// read_to_n doit copier en incrémentant le pointeur up to \n et s'il tombe 
-	// sur un \0, lire dans le fichier pour vérifier qu'il s'agit bien de
-	// la fin du fichier avant de return la string
-	// cette fonction retournera également l'adresse à sa valeur initiale 
-	// avant une lecture (var -= BUFFER_SIZE)
-	return (ft_read_to_n(&next_line, fd));
+	next_line = gnl_copy(nl, fd, buffer);
+	return (next_line);
 }
-
