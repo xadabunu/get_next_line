@@ -9,8 +9,11 @@ char	*get_next_line(int fd);
 int main(void)
 {
 	int fd = open("test", O_RDONLY);
-	printf("%s", get_next_line(fd));
-
+	for (int i = 0 ; i < 5 ; ++i)
+	{
+		printf("===========\n");
+		printf("%s", get_next_line(fd));
+	}
 	close(fd);
 	return (0);
 }

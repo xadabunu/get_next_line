@@ -18,9 +18,9 @@
 # include <limits.h>
 
 char	*get_next_line(int fd);
-char	*ft_calloc(size_t nbyte, size_t size);
+char	*ft_calloc(size_t size, size_t count);
 void	ft_strcpy(char *dest, char *src, int len);
-size_t	gnl_len(const char *str);
+size_t	gnlen(const char *str);
 char	*gnl_join(char *s1, char *s2);
 
 #endif

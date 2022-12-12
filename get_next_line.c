@@ -12,7 +12,7 @@
 
 #include "get_next_line.h"
 
-size_t	gnl_len(const char *str)
+size_t	gnlen(const char *str)
 {
 	size_t	i;
 
@@ -30,11 +30,16 @@ static char	*gnl_copy(char *src, long fd, char *buffer)
 	size_t	len;
 	long	ret;
 
-	len = gnl_len(src);
+	ret = 1;
+	len = gnlen(src);
 	dest = ft_calloc(sizeof(*dest), len + 1);
+	if (!dest)
+		return (NULL);
 	ft_strcpy(dest, src, len);
-	while (dest[gnl_len(dest) - 1] != '\n' && ret > 0)
+	src += len;
+	while (dest[len - 1] != '\n' && ret > 0)
 	{
+		len = gnlen(src);
 		ret = read(fd, buffer, BUFFER_SIZE);
 		ft_strcpy(src, buffer, BUFFER_SIZE);
 		dest = gnl_join(dest, src);
@@ -46,7 +51,6 @@ char	*get_next_line(int fd)
 {
 	static char	nl[BUFFER_SIZE + 1] = "\0";
 	char		buffer[BUFFER_SIZE];
-	char		*next_line;
 	long		ret;
 
 	if (fd < 0 || fd > OPEN_MAX || BUFFER_SIZE < 1)
@@ -58,6 +62,5 @@ char	*get_next_line(int fd)
 			return (NULL);
 		ft_strcpy(nl, buffer, BUFFER_SIZE);
 	}
-	next_line = gnl_copy(nl, fd, buffer);
-	return (next_line);
+	return (gnl_copy(nl, fd, buffer));
 }

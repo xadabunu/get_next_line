@@ -24,7 +24,10 @@ char	*ft_calloc(size_t size, size_t count)
 		return (NULL);
 	i = 0;
 	while (i < total)
+	{
 		res[i] = '\0';
+		++i;
+	}
 	return (res);
 }
 
@@ -39,6 +42,7 @@ void	ft_strcpy(char *dest, char *src, int len)
 		++i;
 	}
 	dest[i] = '\0';
+	*src += i;
 }
 
 char	*gnl_join(char *s1, char *s2)
@@ -49,9 +53,11 @@ char	*gnl_join(char *s1, char *s2)
 	char	*str;
 
 	i = 0;
-	len1 = gnl_len(s1);
-	len2 = gnl_len(s2);
+	len1 = gnlen(s1);
+	len2 = gnlen(s2);
 	str = ft_calloc(sizeof(*str), (len1 + len2 + 1));
+	if (!str)
+	return (NULL);
 	while (i < len1)
 	{
 		str[i] = s1[i];
