@@ -24,9 +24,7 @@ size_t	gnlen(const char *str)
 	return (i);
 }
 
-#include <stdio.h>
-
-static void update_nl(char *nl)
+static void	update_nl(char *nl)
 {
 	size_t	r;
 	size_t	w;
