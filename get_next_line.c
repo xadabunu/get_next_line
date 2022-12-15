@@ -24,6 +24,25 @@ size_t	gnlen(const char *str)
 	return (i);
 }
 
+#include <stdio.h>
+
+static void update_nl(char *nl)
+{
+	size_t	r;
+	size_t	w;
+
+	r = 0;
+	while (nl[r] && nl[r] != '\n')
+		++r;
+	if (nl[r])
+		++r;
+	w = 0;
+	while (nl[r])
+		nl[w++] = nl[r++];
+	while (nl[w])
+		nl[w++] = '\0';
+}
+
 static char	*gnl_copy(char *src, long fd, char *buffer)
 {
 	char	*dest;
@@ -36,13 +55,17 @@ static char	*gnl_copy(char *src, long fd, char *buffer)
 	if (!dest)
 		return (NULL);
 	ft_strcpy(dest, src, len);
-	src += len;
+	update_nl(src);
 	while (dest[len - 1] != '\n' && ret > 0)
 	{
-		len = gnlen(src);
 		ret = read(fd, buffer, BUFFER_SIZE);
-		ft_strcpy(src, buffer, BUFFER_SIZE);
-		dest = gnl_join(dest, src);
+		if (ret > 0)
+		{
+			ft_strcpy(src, buffer, BUFFER_SIZE);
+			dest = gnl_join(dest, src);
+			update_nl(src);
+			len = gnlen(dest);
+		}
 	}
 	return (dest);
 }
