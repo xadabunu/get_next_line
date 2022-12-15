@@ -56,7 +56,10 @@ char	*gnl_join(char *s1, char *s2)
 	len2 = gnlen(s2);
 	str = ft_calloc(sizeof(*str), (len1 + len2 + 1));
 	if (!str)
+	{
+		free(s1);
 		return (NULL);
+	}
 	while (i < len1)
 	{
 		str[i] = s1[i];
