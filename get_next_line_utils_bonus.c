@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line_utils.c                              :+:      :+:    :+:   */
+/*   get_next_line_utils_bonus.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xadabunu <xadabunu@student.s19.be>         +#+  +:+       +#+        */
+/*   By: xadabunu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/22 13:26:05 by xadabunu          #+#    #+#             */
-/*   Updated: 2022/11/27 16:53:41 by xadabunu         ###   ########.fr       */
+/*   Created: 2022/12/19 17:34:45 by xadabunu          #+#    #+#             */
+/*   Updated: 2022/12/19 17:34:47 by xadabunu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 char	*ft_calloc(size_t size, size_t count)
 {
@@ -67,4 +67,19 @@ char	*gnl_join(char *s1, char *s2)
 		str[len1 + i] = s2[i];
 	free(s1);
 	return (str);
+}
+
+char	**init_nl()
+{
+	char	**nl;
+	int		i;
+
+	i = 0;
+	nl = malloc(OPEN_MAX);
+	while (i < OPEN_MAX)
+	{
+		nl[i] = "\0";
+		++i;
+	}
+	return (nl);
 }

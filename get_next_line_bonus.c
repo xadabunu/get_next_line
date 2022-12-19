@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xadabunu <xadabunu@student.s19.be>         +#+  +:+       +#+        */
+/*   By: xadabunu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/22 13:25:39 by xadabunu          #+#    #+#             */
-/*   Updated: 2022/11/27 16:50:59 by xadabunu         ###   ########.fr       */
+/*   Created: 2022/12/19 17:32:52 by xadabunu          #+#    #+#             */
+/*   Updated: 2022/12/19 17:32:55 by xadabunu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 size_t	gnlen(const char *str)
 {
@@ -78,18 +78,18 @@ static char	*gnl_copy(char *src, long fd, char *buffer)
 
 char	*get_next_line(int fd)
 {
-	static char	nl[BUFFER_SIZE + 1] = "\0";
+	static char	**nl = init_nl();
 	char		buffer[BUFFER_SIZE];
 	long		ret;
 
 	if (fd < 0 || fd > OPEN_MAX || BUFFER_SIZE < 1)
 		return (NULL);
-	if (nl[0] == '\0')
+	if (nl[fd][0] == '\0')
 	{
 		ret = read(fd, buffer, BUFFER_SIZE);
 		if (ret < 1)
 			return (NULL);
-		ft_strcpy(nl, buffer, ret);
+		ft_strcpy(nl[fd], buffer, ret);
 	}
-	return (gnl_copy(nl, fd, buffer));
+	return (gnl_copy(nl[fd], fd, buffer));
 }
