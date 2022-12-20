@@ -22,6 +22,5 @@ char	*ft_calloc(size_t size, size_t count);
 void	ft_strcpy(char *dest, char *src, int len);
 size_t	gnlen(const char *str);
 char	*gnl_join(char *s1, char *s2);
-char	**init_nl();
 
 #endif

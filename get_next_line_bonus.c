@@ -60,7 +60,7 @@ static char	*gnl_copy(char *src, long fd, char *buffer)
 		return (NULL);
 	ft_strcpy(dest, src, len);
 	update_nl(src);
-	while (dest[len - 1] != '\n' && ret > 0)
+	while (dest && dest[len - 1] != '\n' && ret > 0)
 	{
 		ret = read(fd, buffer, BUFFER_SIZE);
 		if (ret > 0)
@@ -78,7 +78,7 @@ static char	*gnl_copy(char *src, long fd, char *buffer)
 
 char	*get_next_line(int fd)
 {
-	static char	**nl = init_nl();
+	static char	nl[OPEN_MAX][BUFFER_SIZE + 1];
 	char		buffer[BUFFER_SIZE];
 	long		ret;
 

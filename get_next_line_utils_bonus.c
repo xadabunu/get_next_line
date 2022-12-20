@@ -68,18 +68,3 @@ char	*gnl_join(char *s1, char *s2)
 	free(s1);
 	return (str);
 }
-
-char	**init_nl()
-{
-	char	**nl;
-	int		i;
-
-	i = 0;
-	nl = malloc(OPEN_MAX);
-	while (i < OPEN_MAX)
-	{
-		nl[i] = "\0";
-		++i;
-	}
-	return (nl);
-}
