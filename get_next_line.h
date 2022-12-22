@@ -15,7 +15,7 @@
 
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 10
-# elif BUFFER_SIZE < 0 || BUFFER_SIZE > 8000000
+# elif BUFFER_SIZE < 0
 #  undef BUFFER_SIZE
 #  define BUFFER_SIZE 0
 # endif

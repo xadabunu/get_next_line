@@ -84,7 +84,7 @@ char	*get_next_line(int fd)
 	char		buffer[BUFFER_SIZE];
 	long		ret;
 
-	if (fd < 0 || fd > OPEN_MAX || BUFFER_SIZE < 1)
+	if (fd < 0 || fd > OPEN_MAX || BUFFER_SIZE < 1 || BUFFER_SIZE >= INT_MAX)
 		return (NULL);
 	if (nl[fd][0] == '\0')
 	{
