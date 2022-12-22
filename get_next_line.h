@@ -13,6 +13,13 @@
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
 
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 10
+# elif BUFFER_SIZE < 0 || BUFFER_SIZE > 8000000
+#  undef BUFFER_SIZE
+#  define BUFFER_SIZE 0
+# endif
+
 # include <unistd.h>
 # include <stdlib.h>
 # include <limits.h>
